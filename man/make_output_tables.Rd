@@ -4,20 +4,12 @@
 \alias{make_output_tables}
 \title{Create excel tables}
 \usage{
-make_output_tables(
-  table_layout,
-  notes_list,
-  publication_date,
-  contents_title,
-  workbook_filename
-)
+make_output_tables(table_layout, notes_list, contents_title, workbook_filename)
 }
 \arguments{
 \item{table_layout}{Table layout object created by metadata functions}
 
 \item{notes_list}{List of notes in publication}
-
-\item{publication_date}{Publication date}
 
 \item{contents_title}{Title of contents page}
 

@@ -2,10 +2,11 @@
 % Please edit documentation in R/build_metadata.R
 \name{create_metadata}
 \alias{create_metadata}
-\title{Create metadata}
+\title{Initialise Metadata Object}
 \usage{
 create_metadata()
 }
 \description{
-Create metadata
+Creates an empty metadata object which can be added to with
+\verb{r xlsss::add_sheet_to_metadata}
 }

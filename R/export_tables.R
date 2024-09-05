@@ -1,9 +1,8 @@
-#' Create tibble of sheet titles based on publication date
+#' Create tibble of sheet titles for contents page
 #'
-#' @param publication_date Publication date
 #' @param table_layout Table layout object created by metadata functions
 #' @export
-make_contents_table <- function(publication_date, table_layout) {
+make_contents_table <- function(table_layout) {
   contents <- table_layout %>%
     dplyr::select(.data$sheet_name, .data$sheet_title) %>%
     dplyr::rename(Sheet = .data$sheet_name, Description = .data$sheet_title) %>%
@@ -19,7 +18,9 @@ make_contents_table <- function(publication_date, table_layout) {
 #' @param contents Contents
 #' @param contents_title Character string of title to include on contents page.
 #' @export
-add_contents_sheet <- function(wb, contents, contents_title) {
+add_contents_sheet <- function(wb,
+                               contents,
+                               contents_title) {
   contents_table <-
     contents %>%
     dplyr::slice(-1) %>%
@@ -30,7 +31,8 @@ add_contents_sheet <- function(wb, contents, contents_title) {
       text = .data$Sheet
     ))
 
-  class(contents_table$`Table Number`) <- c(class(contents_table$`Table Number`), "formula")
+  class(contents_table$`Table Number`) <-
+    c(class(contents_table$`Table Number`), "formula")
 
   openxlsx::modifyBaseFont(wb,
                            fontSize = 12,
@@ -101,7 +103,9 @@ add_contents_sheet <- function(wb, contents, contents_title) {
 #' @param contents Contents
 #' @param notes_list List of notes to include in publication
 #' @export
-add_notes_sheet <- function(wb, contents, notes_list) {
+add_notes_sheet <- function(wb,
+                            contents,
+                            notes_list) {
   openxlsx::addWorksheet(wb, sheetName = "Notes")
 
   notes_list <- notes_list %>%
@@ -175,7 +179,12 @@ add_notes_sheet <- function(wb, contents, notes_list) {
 #' @param start_row Row to start formatting
 #' @param end_row Row to end formatting
 #' @export
-format_columns <- function(wb, sheet_name, table, column, start_row, end_row) {
+format_columns <- function(wb,
+                           sheet_name,
+                           table,
+                           column,
+                           start_row,
+                           end_row) {
   # Format numbers with commas
   if (purrr::is_integer(table[[column]])) {
     openxlsx::addStyle(wb, sheet_name,
@@ -209,7 +218,13 @@ format_columns <- function(wb, sheet_name, table, column, start_row, end_row) {
 #' @param start_col Start column of formatting
 #' @param end_col End row of formatting
 #' @export
-format_rows <- function(wb, sheet_name, table, table_row, sheet_row, start_col, end_col) {
+format_rows <- function(wb,
+                        sheet_name,
+                        table,
+                        table_row,
+                        sheet_row,
+                        start_col,
+                        end_col) {
   # Make total rows bold
   if (table[[table_row, 1]] == "Total" |
       stringr::str_starts(table[[table_row, 1]],"Financial")) {
@@ -231,11 +246,26 @@ format_rows <- function(wb, sheet_name, table, table_row, sheet_row, start_col, 
 #' @param tables Tables to be included on sheet
 #' @param header_rows Number of header rows
 #' @export
-add_data_tables <- function(wb, sheet_name, sheet_title, tables, header_rows) {
+add_data_tables <- function(wb,
+                            sheet_name,
+                            sheet_title,
+                            tables,
+                            header_rows) {
   tables %>%
-    dplyr::select(.data$table, .data$start_row, .data$end_row, .data$table_title, .data$table_name) %>%
+    dplyr::select(.data$table,
+                  .data$start_row,
+                  .data$end_row,
+                  .data$table_title,
+                  .data$table_name) %>%
     purrr::pmap(function(table, start_row, end_row, table_title, table_name) {
-      xlsss::add_data_table(wb, sheet_name, sheet_title, table, start_row, end_row, header_rows, table_name)
+      xlsss::add_data_table(wb,
+                            sheet_name,
+                            sheet_title,
+                            table,
+                            start_row,
+                            end_row,
+                            header_rows,
+                            table_name)
       if(nrow(tables) > 1){
         openxlsx::writeData(wb, sheet_name,
                             x = table_title,
@@ -266,7 +296,14 @@ add_data_tables <- function(wb, sheet_name, sheet_title, tables, header_rows) {
 #' @param n_tables Number of tables
 #' @param notes_start Row that notes start on
 #' @export
-add_data_sheet <- function(wb, sheet_name, sheet_title, sheet_tables, notes_list, note_mapping, n_tables, notes_start) {
+add_data_sheet <- function(wb,
+                           sheet_name,
+                           sheet_title,
+                           sheet_tables,
+                           notes_list,
+                           note_mapping,
+                           n_tables,
+                           notes_start) {
   # Define start and end points for tables
   header_rows <- 5
 
@@ -375,7 +412,14 @@ add_data_sheet <- function(wb, sheet_name, sheet_title, sheet_tables, notes_list
 #' @param header_rows Number of header rows
 #' @param table_name Name of table
 #' @export
-add_data_table <- function(wb, sheet_name, sheet_title, table, start_row, end_row, header_rows, table_name) {
+add_data_table <- function(wb,
+                           sheet_name,
+                           sheet_title,
+                           table,
+                           start_row,
+                           end_row,
+                           header_rows,
+                           table_name) {
   # Format data table
   openxlsx::addStyle(wb,
                      sheet_name,
@@ -394,7 +438,8 @@ add_data_table <- function(wb, sheet_name, sheet_title, table, start_row, end_ro
                            rowNames = FALSE,
                            keepNA = TRUE,
                            na.string = "n/a",
-                           tableStyle = "TableStyleLight1", headerStyle = openxlsx::createStyle(wrapText = TRUE),
+                           tableStyle = "TableStyleLight1",
+                           headerStyle = openxlsx::createStyle(wrapText = TRUE),
                            stack = TRUE,
                            withFilter = openxlsx::openxlsx_getOp("withFilter", FALSE)
   )
@@ -446,7 +491,14 @@ add_data_table <- function(wb, sheet_name, sheet_title, table, start_row, end_ro
 #' @param end_row Row to end formatting
 #' @param header_rows Number of header rows
 #' @export
-negative_to_c <- function (wb, sheet_name, table, column, row, start_row, end_row, header_rows){
+negative_to_c <- function (wb,
+                           sheet_name,
+                           table,
+                           column,
+                           row,
+                           start_row,
+                           end_row,
+                           header_rows){
   if (table[[column]][[row]] == -1 & (!is.na(table[[column]][[row]]))){
     openxlsx::writeData(wb,
                         sheet_name,
@@ -494,17 +546,19 @@ tweak_formatting <- function(wb) {
 #'
 #' @param table_layout Table layout object created by metadata functions
 #' @param notes_list List of notes in publication
-#' @param publication_date Publication date
 #' @param contents_title Title of contents page
 #' @param workbook_filename Filename to export workbook to
 #' @export
-make_output_tables <- function(table_layout, notes_list, publication_date, contents_title, workbook_filename) {
+make_output_tables <- function(table_layout,
+                               notes_list,
+                               contents_title,
+                               workbook_filename) {
 
   wb <- openxlsx::createWorkbook()
 
   openxlsx::modifyBaseFont(wb, fontSize = 12, fontColour = "black", fontName = "Roboto")
 
-  contents <- xlsss::make_contents_table(publication_date, table_layout)
+  contents <- xlsss::make_contents_table(table_layout)
 
   wb <- xlsss::add_contents_sheet(wb, contents, contents_title)
 

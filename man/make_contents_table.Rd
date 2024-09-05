@@ -2,15 +2,13 @@
 % Please edit documentation in R/export_tables.R
 \name{make_contents_table}
 \alias{make_contents_table}
-\title{Create tibble of sheet titles based on publication date}
+\title{Create tibble of sheet titles for contents page}
 \usage{
-make_contents_table(publication_date, table_layout)
+make_contents_table(table_layout)
 }
 \arguments{
-\item{publication_date}{Publication date}
-
 \item{table_layout}{Table layout object created by metadata functions}
 }
 \description{
-Create tibble of sheet titles based on publication date
+Create tibble of sheet titles for contents page
 }
