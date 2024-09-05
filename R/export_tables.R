@@ -450,7 +450,7 @@ add_data_table <- function(wb,
     wb,
     sheet_name,
     cols = 1,
-    width = "auto",
+    width = 22,
     ignoreMergedCells = TRUE
   )
 
