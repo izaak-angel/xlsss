@@ -552,7 +552,7 @@ make_output_tables <- function(metadata,
                                notes_list,
                                contents_title) {
 
-  if(!is_tibble(table_data)){
+  if(!tibble::is_tibble(table_data)){
     table_data <- table_list_to_tibble(table_data)}
 
   table_layout <- create_table_layout(metadata, table_data)

@@ -1,7 +1,7 @@
 #' Initialise Metadata Object
 #'
 #' @description Creates an empty metadata object which can be added to with
-#' `r xlsss::add_sheet_to_metadata`
+#' `xlsss::add_sheet_to_metadata`
 #' @export
 create_metadata <- function(){
 
@@ -42,7 +42,7 @@ add_sheet_to_metadata <- function(metadata,
 #' Combine Metadata and Tables to Create Layout
 #'
 #' Takes a metadata object and adds specified table_data to create a table layout to
-#' be passed to `r xlsss::make_output_tables`
+#' be passed to `xlsss::make_output_tables`
 #' @param metadata Metadata object
 #' @param table_data Tibble of tables. Must include columns: name, table and title.
 #' `name` column must match the table names specified in the metadata object.
@@ -126,7 +126,7 @@ generate_table_metadata <- function(table_names,
 #' Convert List of Tables to table_data
 #'
 #' @description Helper function for quickly turning named list of tables into a
-#' table_data object for use in the `r xlsss::create_table_layout` function.
+#' table_data object for use in the `xlsss::create_table_layout` function.
 #' @param table_list List of tables to be converted to table_data
 #' @export
 table_list_to_tibble <- function(table_list){
