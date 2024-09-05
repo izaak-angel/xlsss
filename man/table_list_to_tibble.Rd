@@ -11,5 +11,5 @@ table_list_to_tibble(table_list)
 }
 \description{
 Helper function for quickly turning named list of tables into a
-table_data object for use in the \verb{r xlsss::create_table_layout} function.
+table_data object for use in the \code{xlsss::create_table_layout} function.
 }

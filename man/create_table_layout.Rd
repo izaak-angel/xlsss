@@ -13,9 +13,9 @@ create_table_layout(metadata, table_data)
 \code{name} column must match the table names specified in the metadata object.
 \code{table} column contains the tables to be outputted to excel
 \code{title} column is only used where more than one table is included on a sheet
-and is the sub title to be printed above the table.}
+and is the subtitle to be printed above the table.}
 }
 \description{
 Takes a metadata object and adds specified table_data to create a table layout to
-be passed to \verb{r xlsss::make_output_tables}
+be passed to \code{xlsss::make_output_tables}
 }

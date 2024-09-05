@@ -8,5 +8,5 @@ create_metadata()
 }
 \description{
 Creates an empty metadata object which can be added to with
-\verb{r xlsss::add_sheet_to_metadata}
+\code{xlsss::add_sheet_to_metadata}
 }
