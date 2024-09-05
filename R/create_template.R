@@ -25,7 +25,7 @@ build_metadata <- function(){
 
 # Create list of notes
 build_notes <- function(){
-  tribble(
+  tibble::tribble(
   ~note_number, ~note_text,
   \"[note 1]\", \"note text 1\",
   \"[note 2]\", \"note text 2\",
@@ -34,18 +34,31 @@ build_notes <- function(){
 }
 
 # Create tibble containing tables to output
+
 # name column should correspond to table names in metadata,
 # table column contains the table objects themselves
 # title column contains title to print above table if more than one table on sheet
 # otherwise this column is not used
 build_tables <- function(){
-  tribble(
+  tibble::tribble(
   ~name, ~table, ~title
   \"table_1\", table_1, \"na\",
   \"table_2\", table_2, \"Application outcomes by age\",
-  \"table_3\", table_3, \"Local Authority\"
+  \"table_3\", table_3, \"Application outcomes by local authority\"
   )
 }
+
+# Apply bespoke formatting to final workbook if required
+tweak_formatting <- function(wb, tweak) {
+# Use openxlsx functions to apply whatever formatting adjustments are needed
+# Below is simply an example
+  setColWidths(wb,
+              \"Applications by month\",
+              cols = 1,
+              width = 22,
+              ignoreMergedCells = TRUE)
+}
+
 
 ### Add to end of pipeline ###
 
@@ -55,13 +68,21 @@ notes_list <- build_notes()
 
 table_data <- build_tables()
 
-# Output tables to file
+
+# Create workbook object
 save_output_tables(
   metadata = metadata,
   table_data = table_data,
   notes_list = notes_list,
-  contents_title = \"Statistical tables as at DATE\",
-  workbook_filename = FILENAME)
+  contents_title = \"Statistical tables as at DATE\")
+
+# Apply final formatting adjustments
+wb <- tweak_formatting(wb)
+
+# Output final workbook
+openxlsx::saveWorkbook(wb, FILENAME, overwrite = TRUE)
+
+
 "
 , file = paste0(filename,".R"), append = FALSE)
 }
