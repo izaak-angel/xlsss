@@ -352,12 +352,6 @@ add_data_sheet <- function(wb,
                       startCol = 1
   )
 
-  # writeData(wb, sheet_name,
-  #           x = paste0("Data bars are used in ",if_else(n_tables == 1, "this table", "these tables"),". To remove these, select the table, go to the Home tab, click on Conditional Formatting and select Clear Rules from This Table."),
-  #           startRow = 4,
-  #           startCol = 1
-  # )
-
   openxlsx::writeData(wb, sheet_name,
                       x = paste0(
                         "Notes are located below the",
@@ -374,7 +368,7 @@ add_data_sheet <- function(wb,
 
 
   openxlsx::writeData(wb, sheet_name,
-                      x = "Some rows between tables are left blank in this sheet to improve readability.",
+                      x = "[c] indicates that a figure has been suppressed for disclosure control purposes.",
                       startRow = 5,
                       startCol = 1
   )
@@ -544,15 +538,24 @@ tweak_formatting <- function(wb) {
 
 #' Create excel tables
 #'
-#' @param table_layout Table layout object created by metadata functions
+#' @param metadata metadata object created by metadata functions
+#' @param table_data Tibble of tables. Must include columns: name, table and title.
+#' `name` column must match the table names specified in the metadata object.
+#' `table` column contains the tables to be outputted to excel
+#' `title` column is only used where more than one table is included on a sheet
+#' and is the subtitle to be printed above the table.
 #' @param notes_list List of notes in publication
 #' @param contents_title Title of contents page
-#' @param workbook_filename Filename to export workbook to
 #' @export
-make_output_tables <- function(table_layout,
+make_output_tables <- function(metadata,
+                               table_data,
                                notes_list,
-                               contents_title,
-                               workbook_filename) {
+                               contents_title) {
+
+  if(!is_tibble(table_data)){
+    table_data <- table_list_to_tibble(table_data)}
+
+  table_layout <- create_table_layout(metadata, table_data)
 
   wb <- openxlsx::createWorkbook()
 
@@ -568,7 +571,34 @@ make_output_tables <- function(table_layout,
 
   wb <- xlsss::tweak_formatting(wb)
 
+  wb
+}
+
+#' Create and save excel tables
+#'
+#' @param metadata metadata object created by metadata functions
+#' @param table_data Tibble of tables. Must include columns: name, table and title.
+#' `name` column must match the table names specified in the metadata object.
+#' `table` column contains the tables to be outputted to excel
+#' `title` column is only used where more than one table is included on a sheet
+#' and is the subtitle to be printed above the table.
+#' @param notes_list List of notes in publication
+#' @param contents_title Title of contents page
+#' @param workbook_filename Filename to export workbook to
+#' @export
+save_output_tables <- function(metadata,
+                               table_data,
+                               notes_list,
+                               contents_title,
+                               workbook_filename) {
+
+
+  wb <- make_output_tables(metadata,
+                           table_data,
+                           notes_list,
+                           contents_title)
+
   openxlsx::saveWorkbook(wb, workbook_filename, overwrite = TRUE)
 
-  workbook_filename
+  paste0("Tables have been saved to ",workbook_filename)
 }

@@ -48,21 +48,27 @@ add_sheet_to_metadata <- function(metadata,
 #' `name` column must match the table names specified in the metadata object.
 #' `table` column contains the tables to be outputted to excel
 #' `title` column is only used where more than one table is included on a sheet
-#' and is the sub title to be printed above the table.
+#' and is the subtitle to be printed above the table.
 #' @export
 create_table_layout <- function(metadata, table_data) {
   metadata %>%
     dplyr::mutate(
-      tables = purrr::map(.data$table_names,
-                          ~ generate_table_metadata(.x, table_data))) %>%
+      tables = purrr::map(
+        .data$table_names,
+        ~ generate_table_metadata(.x,
+                                  table_data)
+        )
+      ) %>%
     dplyr::mutate(
-      n_tables = purrr::map(.data$tables, nrow) %>% as.numeric(),
-      notes_start = purrr::map(
-        .data$tables,
-        ~ .x %>%
-          dplyr::select(.data$n_rows) %>%
-          purrr::map(~ sum(.x)) %>%
-          as.numeric()
+      n_tables = purrr::map(.data$tables, nrow) %>%
+        as.numeric(),
+      notes_start =
+        purrr::map(
+          .data$tables,
+          ~ .x %>%
+            dplyr::select(.data$n_rows) %>%
+            purrr::map(~ sum(.x)) %>%
+            as.numeric()
       )
     ) %>%
     dplyr::select(.data$sheet_name,
@@ -122,7 +128,7 @@ generate_table_metadata <- function(table_names,
 #' @description Helper function for quickly turning named list of tables into a
 #' table_data object for use in the `r xlsss::create_table_layout` function.
 #' @param table_list List of tables to be converted to table_data
-#'
+#' @export
 table_list_to_tibble <- function(table_list){
   dplyr::tibble(
     name = names(table_list),
