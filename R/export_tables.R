@@ -124,7 +124,7 @@ add_notes_sheet <- function(wb,
   openxlsx::setColWidths(
     wb,
     "Notes",
-    width = 150,
+    width = 100,
     cols = 2,
     ignoreMergedCells = TRUE
   )
@@ -441,16 +441,24 @@ add_data_table <- function(wb,
   # Format table headers
   openxlsx::addStyle(wb, sheet_name,
                      rows = header_rows + start_row,
-                     cols = 1:length(table),
-                     style = openxlsx::createStyle(halign = "center", wrapText = TRUE)
+                     cols = 2:length(table),
+                     style = openxlsx::createStyle(halign = "right", wrapText = TRUE)
   )
 
   # Format columns
   openxlsx::setColWidths(
     wb,
     sheet_name,
-    cols = 1:length(table),
-    width = 20,
+    cols = 1,
+    width = "auto",
+    ignoreMergedCells = TRUE
+  )
+
+  openxlsx::setColWidths(
+    wb,
+    sheet_name,
+    cols = 2:length(table),
+    width = 12,
     ignoreMergedCells = TRUE
   )
 
@@ -527,15 +535,6 @@ add_data_sheets <- function(wb, table_layout, notes_list) {
   return(wb)
 }
 
-#' Specific changes to individual sheet formatting
-#'
-#' @param wb Workbook object
-#' @export
-tweak_formatting <- function(wb) {
-
-  return(wb)
-}
-
 #' Create excel tables
 #'
 #' @param metadata metadata object created by metadata functions
@@ -568,8 +567,6 @@ make_output_tables <- function(metadata,
   wb <- xlsss::add_notes_sheet(wb, contents, notes_list)
 
   wb <- xlsss::add_data_sheets(wb, table_layout, notes_list)
-
-  wb <- xlsss::tweak_formatting(wb)
 
   wb
 }
