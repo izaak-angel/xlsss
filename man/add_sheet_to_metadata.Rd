@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_metadata.R
 \name{add_sheet_to_metadata}
 \alias{add_sheet_to_metadata}
-\title{Instructs metadata to add tables to a given worksheet}
+\title{Add Sheet to Metadata Object}
 \usage{
 add_sheet_to_metadata(
   metadata,
@@ -15,14 +15,14 @@ add_sheet_to_metadata(
 \arguments{
 \item{metadata}{Metadata object}
 
-\item{sheet_name}{Sheet name}
+\item{sheet_name}{Name to be displayed on sheet tab}
 
-\item{sheet_title}{Sheet title}
+\item{sheet_title}{Title to be show in bold in cell A1 on sheet}
 
-\item{table_names}{List of table names}
+\item{table_names}{Character vector of table names to include on this sheet. Names must match those in the table_list object}
 
-\item{table_notes}{List of table notes}
+\item{table_notes}{Numeric vector of notes to be included underneath tables on this sheet}
 }
 \description{
-Instructs metadata to add tables to a given worksheet
+Adds a new sheet to a metadata object.
 }

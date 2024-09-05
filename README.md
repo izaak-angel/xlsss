@@ -9,7 +9,7 @@
 <!-- badges: end -->
 
 The goal of xlsss is to automate production of statistical tables for
-Socail Security Scotland.
+Social Security Scotland.
 
 ## Installation
 
@@ -18,5 +18,5 @@ You can install the development version of xlsss from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("izaak-jephson/xlsss")
+devtools::install_github("ScotGovAnalysis/xlsss")
 ```

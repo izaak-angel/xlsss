@@ -1,5 +1,7 @@
-#' Create metadata
+#' Initialise Metadata Object
 #'
+#' @description Creates an empty metadata object which can be added to with
+#' `r xlsss::add_sheet_to_metadata`
 #' @export
 create_metadata <- function(){
 
@@ -11,13 +13,14 @@ create_metadata <- function(){
     )
 }
 
-#' Instructs metadata to add tables to a given worksheet
+#' Add Sheet to Metadata Object
 #'
+#' @description Adds a new sheet to a metadata object.
 #' @param metadata Metadata object
-#' @param sheet_name Sheet name
-#' @param sheet_title Sheet title
-#' @param table_names List of table names
-#' @param table_notes List of table notes
+#' @param sheet_name Name to be displayed on sheet tab
+#' @param sheet_title Title to be show in bold in cell A1 on sheet
+#' @param table_names Character vector of table names to include on this sheet. Names must match those in the table_list object
+#' @param table_notes Numeric vector of notes to be included underneath tables on this sheet
 #' @export
 add_sheet_to_metadata <- function(metadata,
                                   sheet_name,
@@ -36,47 +39,60 @@ add_sheet_to_metadata <- function(metadata,
     )
 }
 
-#' Add table metadata for all tables
+#' Combine Metadata and Tables to Create Layout
 #'
+#' Takes a metadata object and adds specified table_data to create a table layout to
+#' be passed to `r xlsss::make_output_tables`
 #' @param metadata Metadata object
-#' @param table_list List of tables
+#' @param table_data Tibble of tables. Must include columns: name, table and title.
+#' `name` column must match the table names specified in the metadata object.
+#' `table` column contains the tables to be outputted to excel
+#' `title` column is only used where more than one table is included on a sheet
+#' and is the sub title to be printed above the table.
 #' @export
-add_tables_to_metadata <- function(metadata, table_list) {
+create_table_layout <- function(metadata, table_data) {
   metadata %>%
     dplyr::mutate(
       tables = purrr::map(.data$table_names,
-                          ~ generate_table_metadata(.x, table_list))) %>%
+                          ~ generate_table_metadata(.x, table_data))) %>%
     dplyr::mutate(
       n_tables = purrr::map(.data$tables, nrow) %>% as.numeric(),
       notes_start = purrr::map(
         .data$tables,
         ~ .x %>%
           dplyr::select(.data$n_rows) %>%
-          purrr::map( ~ sum(.x)) %>%
+          purrr::map(~ sum(.x)) %>%
           as.numeric()
       )
-    )
+    ) %>%
+    dplyr::select(.data$sheet_name,
+                  .data$sheet_title,
+                  .data$table_names,
+                  .data$table_notes,
+                  .data$tables,
+                  .data$n_tables,
+                  .data$notes_start)
 
 }
 
-#' Generate metadata for a single sheet
+#' Generate Metadata for a Single Sheet
 #'
 #' @param table_names Table name
-#' @param table_list List of tables
+#' @param table_data Tibble of tables
 #' @param padding_rows_multi Row gap for sheet with multiple tables
 #' @param padding_rows_single Row gap for sheet with single table
 #' @export
 generate_table_metadata <- function(table_names,
-                                    table_list,
+                                    table_data,
                                     padding_rows_multi = 2,
                                     padding_rows_single = 1){
 
   dplyr::tibble(
     table_name = table_names,
-    table = table_list %>%
+    table = table_data %>%
       dplyr::filter(.data$name %in% table_names) %>%
       dplyr::pull(.data$table),
-    table_title = table_list %>%
+    table_title = table_data %>%
       dplyr::filter(.data$name %in% table_names) %>%
       dplyr::pull(.data$title)
   ) %>%
@@ -99,3 +115,19 @@ generate_table_metadata <- function(table_names,
     )
 
 }
+
+
+#' Convert List of Tables to table_data
+#'
+#' @description Helper function for quickly turning named list of tables into a
+#' table_data object for use in the `r xlsss::create_table_layout` function.
+#' @param table_list List of tables to be converted to table_data
+#'
+table_list_to_tibble <- function(table_list){
+  dplyr::tibble(
+    name = names(table_list),
+    table = table_list,
+    title = paste(names(table_list)))
+}
+
+
