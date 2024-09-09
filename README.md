@@ -18,7 +18,8 @@ You can install the development version of xlsss from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("ScotGovAnalysis/xlsss")
+devtools::install_github("ScotGovAnalysis/xlsss",
+                          upgrade = "never")
 ```
 
 ## Getting started
