@@ -206,13 +206,13 @@ format_columns <- function(wb,
     )
 
   }
-  # Format £ columns
-  if (str_detect(colnames(table[column]), "[Vv]alue")) {
-    addStyle(wb, sheet_name,
-             rows = start_row:end_row,
-             cols = column,
-             style = createStyle(numFmt = "£#,##0;-;£0", halign = "right"),
-             gridExpand = TRUE
+  # Format GBP columns
+  if (stringr::str_detect(colnames(table[column]), "[Vv]alue")) {
+    openxlsx::addStyle(wb, sheet_name,
+                       rows = start_row:end_row,
+                       cols = column,
+                       style = openxlsx::createStyle(numFmt = "£#,##0;-;£0", halign = "right"),
+                       gridExpand = TRUE
     )
 
   }
@@ -247,12 +247,12 @@ format_rows <- function(wb,
     )
   }
   # Format % rows
-  else if (str_starts(table[[table_row, 1]],"Percentage")) {
-    addStyle(wb, sheet_name,
-             rows = sheet_row,
-             cols = 2:end_col,
-             style = createStyle(numFmt = "0%;-;0%", halign = "right"),
-             gridExpand = TRUE
+  else if (stringr::str_starts(table[[table_row, 1]],"Percentage")) {
+    openxlsx::addStyle(wb, sheet_name,
+                       rows = sheet_row,
+                       cols = 2:end_col,
+                       style = openxlsx::createStyle(numFmt = "0%;-;0%", halign = "right"),
+                       gridExpand = TRUE
     )
 
   }

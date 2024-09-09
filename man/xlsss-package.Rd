@@ -4,12 +4,12 @@
 \name{xlsss-package}
 \alias{xlsss}
 \alias{xlsss-package}
-\title{xlsss: What the Package Does (One Line, Title Case)}
+\title{xlsss: Automate Accessible Table Production for Social Security Scotland}
 \description{
-What the package does (one paragraph).
+Automates the process of outputting statistical tables to excel in a format that complies with accessibility requirements.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Izaak Jephson \email{first.last@example.com}
 
 }
 \keyword{internal}
