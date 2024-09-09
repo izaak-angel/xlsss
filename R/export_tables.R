@@ -211,7 +211,7 @@ format_columns <- function(wb,
     openxlsx::addStyle(wb, sheet_name,
                        rows = start_row:end_row,
                        cols = column,
-                       style = openxlsx::createStyle(numFmt = "£#,##0;-;£0", halign = "right"),
+                       style = openxlsx::createStyle(numFmt = "\u00A3#,##0;-;\u00A30", halign = "right"),
                        gridExpand = TRUE
     )
 
