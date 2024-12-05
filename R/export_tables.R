@@ -205,6 +205,15 @@ format_columns <- function(wb,
                        gridExpand = TRUE
     )
 
+
+
+  } else {
+    openxlsx::addStyle(wb, sheet_name,
+                       rows = start_row:end_row,
+                       cols = column,
+                       style = openxlsx::createStyle(halign = "right"),
+                       gridExpand = TRUE
+    )
   }
   # Format GBP columns
   if (stringr::str_detect(colnames(table[column]), "[Vv]alue")) {
