@@ -588,6 +588,10 @@ make_output_tables <- function(metadata,
 
   wb <- xlsss::add_data_sheets(wb, table_layout, notes_list)
 
+  if(exists("tweak_formatting")){
+    wb <- tweak_formatting(wb)
+  }
+
   wb
 }
 
