@@ -214,7 +214,8 @@ format_columns <- function(wb,
                        style = openxlsx::createStyle(halign = "right"),
                        gridExpand = TRUE
     )
-  } else if (column == 1){
+  }
+  if (column == 1){
       openxlsx::addStyle(wb, sheet_name,
                          rows = start_row:end_row,
                          cols = column,
@@ -455,7 +456,7 @@ add_data_table <- function(wb,
                      sheet_name,
                      rows = header_rows + start_row:header_rows + end_row - 1,
                      cols = 1,
-                     style = openxlsx::createStyle(wrapText = FALSE)
+                     style = openxlsx::createStyle(wrapText = FALSE, halign = "left")
   )
 
 
