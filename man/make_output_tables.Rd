@@ -4,7 +4,13 @@
 \alias{make_output_tables}
 \title{Create excel tables}
 \usage{
-make_output_tables(metadata, table_data, notes_list, contents_title)
+make_output_tables(
+  metadata,
+  table_data,
+  notes_list,
+  contents_title,
+  tweak = TRUE
+)
 }
 \arguments{
 \item{metadata}{metadata object created by metadata functions}
@@ -18,6 +24,8 @@ and is the subtitle to be printed above the table.}
 \item{notes_list}{List of notes in publication}
 
 \item{contents_title}{Title of contents page}
+
+\item{tweak}{Should format tweaking be applied}
 }
 \description{
 Create excel tables

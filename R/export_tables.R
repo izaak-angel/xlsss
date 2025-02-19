@@ -582,6 +582,7 @@ add_data_sheets <- function(wb, table_layout, notes_list) {
 #' and is the subtitle to be printed above the table.
 #' @param notes_list List of notes in publication
 #' @param contents_title Title of contents page
+#' @param tweak Should format tweaking be applied
 #' @export
 make_output_tables <- function(metadata,
                                table_data,
