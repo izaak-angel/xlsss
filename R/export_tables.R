@@ -586,7 +586,8 @@ add_data_sheets <- function(wb, table_layout, notes_list) {
 make_output_tables <- function(metadata,
                                table_data,
                                notes_list,
-                               contents_title) {
+                               contents_title,
+                               tweak = TRUE) {
 
   if(!tibble::is_tibble(table_data)){
     table_data <- table_list_to_tibble(table_data)}
@@ -605,7 +606,7 @@ make_output_tables <- function(metadata,
 
   wb <- xlsss::add_data_sheets(wb, table_layout, notes_list)
 
-  if(exists("tweak_formatting")){
+  if(exists("tweak_formatting") & tweak == TRUE){
     wb <- tweak_formatting(wb)
   }
 
