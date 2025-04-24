@@ -9,7 +9,9 @@ make_output_tables(
   table_data,
   notes_list,
   contents_title,
-  tweak = TRUE
+  tweak = TRUE,
+  use_low = FALSE,
+  table_headings = FALSE
 )
 }
 \arguments{
@@ -26,6 +28,10 @@ and is the subtitle to be printed above the table.}
 \item{contents_title}{Title of contents page}
 
 \item{tweak}{Should format tweaking be applied}
+
+\item{use_low}{Does the wb use low for non-sensitive values}
+
+\item{table_headings}{Use subheadings for all tables}
 }
 \description{
 Create excel tables

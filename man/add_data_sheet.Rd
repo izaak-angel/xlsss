@@ -12,7 +12,9 @@ add_data_sheet(
   notes_list,
   note_mapping,
   n_tables,
-  notes_start
+  notes_start,
+  use_low = FALSE,
+  table_headings = FALSE
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ add_data_sheet(
 \item{n_tables}{Number of tables}
 
 \item{notes_start}{Row that notes start on}
+
+\item{use_low}{Does the page use low for non-sensitive values}
+
+\item{table_headings}{Use subheadings for all tables}
 }
 \description{
 Create table sheet with header wording, tables and notes
