@@ -4,7 +4,14 @@
 \alias{add_data_tables}
 \title{Add data tables to existing worksheet}
 \usage{
-add_data_tables(wb, sheet_name, sheet_title, tables, header_rows)
+add_data_tables(
+  wb,
+  sheet_name,
+  sheet_title,
+  tables,
+  header_rows,
+  table_headings = FALSE
+)
 }
 \arguments{
 \item{wb}{Workbook object}
@@ -16,6 +23,8 @@ add_data_tables(wb, sheet_name, sheet_title, tables, header_rows)
 \item{tables}{Tables to be included on sheet}
 
 \item{header_rows}{Number of header rows}
+
+\item{table_headings}{Use subheadings for all tables}
 }
 \description{
 Add data tables to existing worksheet
