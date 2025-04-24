@@ -74,7 +74,9 @@ save_output_tables(
   metadata = metadata,
   table_data = table_data,
   notes_list = notes_list,
-  contents_title = \"Statistical tables as at DATE\")
+  contents_title = \"Statistical tables as at DATE\",
+  use_low = FALSE, # set to true if you are using [low] for 1 and 2
+  table_headings = FALSE) # set to true if you would like to include table headings for all tables, even if only one table per page
 
 # Apply final formatting adjustments
 wb <- tweak_formatting(wb)
