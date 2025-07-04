@@ -10,7 +10,7 @@ add_data_tables(
   sheet_title,
   tables,
   header_rows,
-  table_headings = FALSE
+  table_headings
 )
 }
 \arguments{

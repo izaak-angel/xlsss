@@ -625,7 +625,7 @@ make_output_tables <- function(metadata,
   if(!tibble::is_tibble(table_data)){
     table_data <- table_list_to_tibble(table_data)}
 
-  table_layout <- create_table_layout(metadata, table_data)
+  table_layout <- create_table_layout(metadata, table_data, table_headings)
 
   wb <- openxlsx::createWorkbook()
 

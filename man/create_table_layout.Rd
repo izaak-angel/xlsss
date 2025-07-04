@@ -4,7 +4,7 @@
 \alias{create_table_layout}
 \title{Combine Metadata and Tables to Create Layout}
 \usage{
-create_table_layout(metadata, table_data)
+create_table_layout(metadata, table_data, table_headings = FALSE)
 }
 \arguments{
 \item{metadata}{Metadata object}
@@ -14,6 +14,8 @@ create_table_layout(metadata, table_data)
 \code{table} column contains the tables to be outputted to excel
 \code{title} column is only used where more than one table is included on a sheet
 and is the subtitle to be printed above the table.}
+
+\item{table_headings}{Use subheadings for all tables}
 }
 \description{
 Takes a metadata object and adds specified table_data to create a table layout to
