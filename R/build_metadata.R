@@ -50,13 +50,14 @@ add_sheet_to_metadata <- function(metadata,
 #' `title` column is only used where more than one table is included on a sheet
 #' and is the subtitle to be printed above the table.
 #' @export
-create_table_layout <- function(metadata, table_data) {
+create_table_layout <- function(metadata, table_data, table_headings = FALSE) {
   metadata %>%
     dplyr::mutate(
       tables = purrr::map(
         .data$table_names,
         ~ generate_table_metadata(.x,
-                                  table_data)
+                                  table_data,
+                                  table_headings = table_headings)
         )
       ) %>%
     dplyr::mutate(
@@ -91,7 +92,8 @@ create_table_layout <- function(metadata, table_data) {
 generate_table_metadata <- function(table_names,
                                     table_data,
                                     padding_rows_multi = 2,
-                                    padding_rows_single = 1){
+                                    padding_rows_single = 1,
+                                    table_headings = FALSE){
 
   dplyr::tibble(
     table_name = table_names,
@@ -113,7 +115,7 @@ generate_table_metadata <- function(table_names,
       end_row = cumsum(.data$n_rows),
       notes_start = .data$end_row,
       start_row = dplyr::case_when(
-        nrow(.) > 1 ~ .data$end_row - .data$n_rows + padding_rows_multi,
+        nrow(.) > 1 | table_headings ~ .data$end_row - .data$n_rows + padding_rows_multi,
         nrow(.) == 1 ~ .data$end_row - .data$n_rows + padding_rows_single
       ),
       start_col = 1,
