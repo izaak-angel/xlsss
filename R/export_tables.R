@@ -289,7 +289,7 @@ add_data_tables <- function(wb,
                             sheet_title,
                             tables,
                             header_rows,
-                            table_headings = FALSE) {
+                            table_headings) {
   tables %>%
     dplyr::select(.data$table,
                   .data$start_row,
