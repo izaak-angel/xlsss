@@ -49,6 +49,7 @@ add_sheet_to_metadata <- function(metadata,
 #' `table` column contains the tables to be outputted to excel
 #' `title` column is only used where more than one table is included on a sheet
 #' and is the subtitle to be printed above the table.
+#' @param table_headings Use subheadings for all tables
 #' @export
 create_table_layout <- function(metadata, table_data, table_headings = FALSE) {
   metadata %>%
@@ -88,6 +89,7 @@ create_table_layout <- function(metadata, table_data, table_headings = FALSE) {
 #' @param table_data Tibble of tables
 #' @param padding_rows_multi Row gap for sheet with multiple tables
 #' @param padding_rows_single Row gap for sheet with single table
+#' @param table_headings Use subheadings for all tables
 #' @export
 generate_table_metadata <- function(table_names,
                                     table_data,

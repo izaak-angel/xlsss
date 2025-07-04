@@ -8,7 +8,8 @@ generate_table_metadata(
   table_names,
   table_data,
   padding_rows_multi = 2,
-  padding_rows_single = 1
+  padding_rows_single = 1,
+  table_headings = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ generate_table_metadata(
 \item{padding_rows_multi}{Row gap for sheet with multiple tables}
 
 \item{padding_rows_single}{Row gap for sheet with single table}
+
+\item{table_headings}{Use subheadings for all tables}
 }
 \description{
 Generate Metadata for a Single Sheet
