@@ -345,8 +345,8 @@ add_data_sheet <- function(wb,
                            note_mapping,
                            n_tables,
                            notes_start,
-                           use_low = FALSE,
-                           table_headings = FALSE) {
+                           use_low,
+                           table_headings) {
   # Define start and end points for tables
   if (use_low){
     header_rows <- 6
@@ -433,7 +433,7 @@ add_data_sheet <- function(wb,
 
 
 
-  xlsss::add_data_tables(wb, sheet_name, sheet_title, sheet_tables, header_rows, table_headings)
+  xlsss::add_data_tables(wb, sheet_name, sheet_title, sheet_tables, header_rows, table_headings = table_headings)
 
   # Add notes
   openxlsx::writeData(wb, sheet_name,
@@ -592,8 +592,8 @@ add_data_sheets <- function(wb, table_layout, notes_list, use_low = FALSE, table
       table_layout[[4]][[.x]],
       table_layout[[6]][[.x]],
       table_layout[[7]][[.x]],
-      use_low,
-      table_headings
+      use_low = use_low,
+      table_headings = table_headings
     )
   )
 
@@ -625,7 +625,7 @@ make_output_tables <- function(metadata,
   if(!tibble::is_tibble(table_data)){
     table_data <- table_list_to_tibble(table_data)}
 
-  table_layout <- create_table_layout(metadata, table_data, table_headings)
+  table_layout <- create_table_layout(metadata, table_data, table_headings = table_headings)
 
   wb <- openxlsx::createWorkbook()
 
@@ -637,7 +637,7 @@ make_output_tables <- function(metadata,
 
   wb <- xlsss::add_notes_sheet(wb, contents, notes_list)
 
-  wb <- xlsss::add_data_sheets(wb, table_layout, notes_list, use_low, table_headings)
+  wb <- xlsss::add_data_sheets(wb, table_layout, notes_list, use_low, table_headings = table_headings)
 
   if(exists("tweak_formatting") & tweak == TRUE){
     wb <- tweak_formatting(wb)
@@ -673,8 +673,8 @@ save_output_tables <- function(metadata,
                            table_data,
                            notes_list,
                            contents_title,
-                           use_low,
-                           table_headings)
+                           use_low = use_low,
+                           table_headings = table_headings)
 
   openxlsx::saveWorkbook(wb, workbook_filename, overwrite = TRUE)
 
