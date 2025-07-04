@@ -108,7 +108,7 @@ generate_table_metadata <- function(table_names,
   ) %>%
     dplyr::mutate(
       n_rows = dplyr::case_when(
-        nrow(.) > 1 ~ purrr::map(.data$table, ~ .x %>% nrow) %>%
+        nrow(.) > 1 | table_headings ~ purrr::map(.data$table, ~ .x %>% nrow) %>%
           as.numeric() + 1 + padding_rows_multi,
         nrow(.) == 1 ~ purrr::map(.data$table, ~ .x %>% nrow) %>%
           as.numeric() + 1 + padding_rows_single
