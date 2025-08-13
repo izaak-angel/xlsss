@@ -192,12 +192,21 @@ format_columns <- function(wb,
                        cols = column,
                        style = openxlsx::createStyle(numFmt = "#,##0;-;0", halign = "right"),
                        gridExpand = TRUE
-    )
+    ) else if (column != 1){
+      openxlsx::addStyle(wb, sheet_name,
+                         rows = start_row:end_row,
+                         cols = column,
+                         style = openxlsx::createStyle(halign = "right"),
+                         gridExpand = TRUE
+      )
+    }
 
 
 
   # Format % columns
-  } else if (stringr::str_detect(colnames(table[column]), "[Pp]ercent|[Pp]ercentage|[Pp]roportion")) {
+  }
+
+  if (stringr::str_detect(colnames(table[column]), "[Pp]ercent|[Pp]ercentage|[Pp]roportion")) {
     openxlsx::addStyle(wb, sheet_name,
                        rows = start_row:end_row,
                        cols = column,
