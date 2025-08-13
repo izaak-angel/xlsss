@@ -186,7 +186,7 @@ format_columns <- function(wb,
                            start_row,
                            end_row) {
   # Format numbers with commas
-  if (purrr::is.numeric(table[[column]])) {
+  if (is.numeric(table[[column]])) {
     openxlsx::addStyle(wb, sheet_name,
                        rows = start_row:end_row,
                        cols = column,
