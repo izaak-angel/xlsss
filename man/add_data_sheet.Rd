@@ -13,8 +13,8 @@ add_data_sheet(
   note_mapping,
   n_tables,
   notes_start,
-  use_low = FALSE,
-  table_headings = FALSE
+  use_low,
+  table_headings
 )
 }
 \arguments{
